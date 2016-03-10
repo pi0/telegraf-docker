@@ -1,20 +1,16 @@
-FROM ubuntu:14.04
+FROM debian:jessie
 
-ENV TELEGRAF_VERSION 0.10
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    ca-certificates apt-transport-https
 
-EXPOSE 8125
-EXPOSE 8092
-EXPOSE 8094
+RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 684A14CF2582E0C5 && \
+    echo "deb https://repos.influxdata.com/debian jessie stable" > /etc/apt/sources.list.d/influxdata.list && \
+    apt-get update 
 
-EXPOSE 80
-EXPOSE 443
+RUN apt-get install telegraf
 
-RUN apt-get update && \
-    apt-get install -y wget
-
-RUN wget http://get.influxdb.org/telegraf/telegraf_0.10.4.1-1_amd64.deb && \
-    dpkg -i telegraf_0.10.4.1-1_amd64.deb && \
-    rm telegraf_0.10.4.1-1_amd64.deb
+EXPOSE 8125 8092 8094
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

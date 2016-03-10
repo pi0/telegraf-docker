@@ -18,7 +18,7 @@ Telegraf is an open source agent written in Go for collecting metrics and data o
 ###Running using default config
 The default config resides on /etc/telegraf/telegraf.conf. However it requires a running influxdb instance as output plugin.
 
-Ensure that influxdb is running and port 8086 is accessible. In the following example influxdb also runs in a container
+Ensure that influxdb is running on localhost and port 8086 is accessible.
 
 Minimal example to start influxdb container
 ```
@@ -26,9 +26,8 @@ docker run -p 8083:8083 -p 8086:8086 influxdb
 ```
 Starting telegraf using default config
 ```
-docker run --env INFLUXDB_HOST=172.17.0.3 telegraf
+docker run --net=host telegraf
 ```
-In the above example influxdb is running at 172.17.0.3
 
 ###Run using a supplied file
 #####Using the config flag
