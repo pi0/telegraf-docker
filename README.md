@@ -12,9 +12,9 @@ Telegraf is an open source agent written in Go for collecting metrics and data o
 -	8092 UDP
 -	8094 TCP
 
-#####Using default config 
+#####Using default config
 
-The default config can be found at `/etc/telegraf/telegraf.conf`. However it requires a running InfluxDB instance as output plugin. Ensure that InfluxDB is running on localhost and port 8086 is accessible before starting the container.
+The default config can be found at `/etc/telegraf/telegraf.conf`. However, this requires a running InfluxDB instance as an output plugin. Ensure that InfluxDB is running on localhost and port 8086 is accessible before starting the Telegraf container.
 
 Minimal example to start an InfluxDB container
 
@@ -27,17 +27,17 @@ Starting Telegraf using default config
 #####Using a custom config file
 
 	docker run -i --name telegraf -v /path/on/host/:/root/ telegraf  -config /root/telegraf.conf
-
-
+	
+	
 	docker run -i --name telegraf -v /path/on/host/telegraf.conf:/etc/telegraf/telegraf.conf:ro telegraf
 
 In the above example `/path/on/host/telegraf.conf` is a valid config file on the host.
 
 Read more about the Telegraf configuration [here](https://docs.influxdata.com/telegraf/v0.10/introduction/configuration/)
 
-#####Using the image with input plugins 
+#####Using the image with input plugins
 
-######Aerospike 
+######Aerospike
 
 Start aerospike on a container. (For this example Aerospike, InfluxDB all run in containers)
 
@@ -56,7 +56,7 @@ Start InfluxDB, and add it as the output plugin
 
 Start the Telegraf by supplying it the modified config file and check that the `aerospike` measurement is added in InfluxDB
 
-######Nginx 
+######Nginx
 
 Modify the nginx default config
 
@@ -72,9 +72,11 @@ Start the nginx container (nginx.conf is at `/path/on/host/nginx.conf` on host):
 
 	docker run -p 8090:8090  -p 8080:80 -v /tmp/nginx.conf:/etc/nginx/nginx.conf:ro  -v /tmp/:/usr/share/nginx/html:ro   nginx
 
-Verify the status page : [http://localhost:8090/basic_status](http://localhost:8090/basic_status). Run Telegraf using the  config file and check that the `nginx` measurement is added in InfluxDb
+Verify the status page : [http://localhost:8090/basic_status](http://localhost:8090/basic_status).
 
-######StatsD 
+Run Telegraf using the config file and check that the `nginx` measurement is added in InfluxDb
+
+######StatsD
 
 Expose the UDP port 8125
 
@@ -82,13 +84,15 @@ Expose the UDP port 8125
 
 Mock the statsD data
 
-        for i in {1..50}; do echo $i;echo "foo:1|c" | nc -u -w0 127.0.0.1 8125; done\`\`\`
+	    for i in {1..50}; do echo $i;echo "foo:1|c" | nc -u -w0 127.0.0.1 8125; done
 
 Check that the measurement `foo` is added in the DB
 
-###Supported Plugins 
--	[Output](https://docs.influxdata.com/telegraf/v0.10/outputs/)
--	[Input](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+###Supported Plugins
+
+[Output](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+
+[Input](https://docs.influxdata.com/telegraf/v0.10/outputs/)
 
 ## Supported Docker versions
 
