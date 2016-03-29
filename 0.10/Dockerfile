@@ -1,15 +1,26 @@
 FROM debian:jessie
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    ca-certificates apt-transport-https
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    ca-certificates \
+    apt-transport-https \
+    gnupg \
+    wget
 
-RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 684A14CF2582E0C5 && \
-    echo "deb https://repos.influxdata.com/debian jessie stable" > /etc/apt/sources.list.d/influxdata.list && \
-    apt-get update 
+RUN wget https://repos.influxdata.com/influxdb.key && \
+    gpg --import influxdb.key && \
+    rm -f influxdb.key
 
-ENV TELEGRAF_VERSION 0.10.4.1-1
-RUN apt-get install -y telegraf=$TELEGRAF_VERSION
+# Note the use of `get.influxdb.com/telegraf` which differs from the
+# other TICK product Dockerfiles.
+ENV TELEGRAF_VERSION 0.10.4.1
+RUN wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_$TELEGRAF_VERSION-1_amd64.deb.asc && \
+    wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
+    gpg --verify telegraf_$TELEGRAF_VERSION-1_amd64.deb.asc telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
+    dpkg -i telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
+    rm -f telegraf_$TELEGRAF_VERSION-1_amd64.deb*
+
+RUN apt-get install -y telegraf=$TELEGRAF_VERSION-1
 
 EXPOSE 8125 8092 8094
 
