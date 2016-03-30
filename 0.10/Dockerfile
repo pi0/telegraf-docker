@@ -20,8 +20,6 @@ RUN wget https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_$TELEGRAF_V
     dpkg -i telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
     rm -f telegraf_$TELEGRAF_VERSION-1_amd64.deb*
 
-RUN apt-get install -y telegraf=$TELEGRAF_VERSION-1
-
 EXPOSE 8125 8092 8094
 
 COPY entrypoint.sh /entrypoint.sh
