@@ -48,10 +48,12 @@ Edit the config file and add aerospike as a plugin
 	[[inputs.aerospike]]
 	        servers = ["172.17.0.2:3000"] 
 
-Start InfluxDB, and add it as the output plugin
+Start InfluxDB, and add it as an output plugin
 
 	[[outputs.influxdb]]
-	      urls = ["http://172.17.0.3:8086"]     database = "telegraf"       precision = "s"
+	      urls = ["http://172.17.0.3:8086"]
+	      database = "telegraf"
+	      precision = "s"
 	      timeout = "5s"
 
 Start the Telegraf by supplying it the modified config file and check that the `aerospike` measurement is added in InfluxDB
@@ -78,11 +80,13 @@ Run Telegraf using the config file and check that the `nginx` measurement is add
 
 ######StatsD
 
-Expose the UDP port 8125
+Telegraf has a StatsD plugin, allowing Telegraf to run as a StatsD server that metrics can be sent to. In order for this to work, you must first configure the [StatsD plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/statsd) in your config file.
+
+Expose UDP port 8125
 
 	docker run -i --name telegraf -v /path/on/host:/root/ -p 8125:8125/udp telegraf -config /root/telegraf.conf
 
-Mock the statsD data
+Send Mock StatsD data
 
 	    for i in {1..50}; do echo $i;echo "foo:1|c" | nc -u -w0 127.0.0.1 8125; done
 
