@@ -2,7 +2,7 @@
 
 Telegraf is an open source agent written in Go for collecting metrics and data on the system it's running on or from other services. Telegraf writes data it collects to InfluxDB in the correct format.
 
-[Telegraf Official Docs](https://docs.influxdata.com/telegraf/v0.10/introduction/getting-started-telegraf/)
+[Telegraf Official Docs](https://docs.influxdata.com/telegraf/v0.11/introduction/getting-started-telegraf/)
 
 ##Using this image
 
@@ -33,7 +33,7 @@ Starting Telegraf using default config
 
 In the above example `/path/on/host/telegraf.conf` is a valid config file on the host.
 
-Read more about the Telegraf configuration [here](https://docs.influxdata.com/telegraf/v0.10/introduction/configuration/)
+Read more about the Telegraf configuration [here](https://docs.influxdata.com/telegraf/v0.11/introduction/configuration/)
 
 #####Using the image with input plugins
 
@@ -94,9 +94,9 @@ Check that the measurement `foo` is added in the DB
 
 ###Supported Plugins
 
-[Output](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+[Output](https://docs.influxdata.com/telegraf/v0.11/outputs/)
 
-[Input](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+[Input](https://docs.influxdata.com/telegraf/v0.11/outputs/)
 
 ## Supported Docker versions
 
