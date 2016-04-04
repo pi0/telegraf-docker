@@ -2,7 +2,7 @@
 
 Telegraf is an open source agent written in Go for collecting metrics and data on the system it's running on or from other services. Telegraf writes data it collects to InfluxDB in the correct format.
 
-[Telegraf Official Docs](https://docs.influxdata.com/telegraf/v0.10/introduction/getting-started-telegraf/)
+[Telegraf Official Docs](https://docs.influxdata.com/telegraf/latest/introduction/getting-started-telegraf/)
 
 ##Using this image
 
@@ -18,7 +18,7 @@ The default config can be found at `/etc/telegraf/telegraf.conf`. However, this 
 
 Minimal example to start an InfluxDB container
 
-	docker run -p 8083:8083 -p 8086:8086 influxdb   
+	docker run -p 8083:8083 -p 8086:8086 influxdb
 
 Starting Telegraf using default config
 
@@ -27,13 +27,13 @@ Starting Telegraf using default config
 #####Using a custom config file
 
 	docker run -i --name telegraf -v /path/on/host/:/root/ telegraf  -config /root/telegraf.conf
-	
-	
+
+
 	docker run -i --name telegraf -v /path/on/host/telegraf.conf:/etc/telegraf/telegraf.conf:ro telegraf
 
 In the above example `/path/on/host/telegraf.conf` is a valid config file on the host.
 
-Read more about the Telegraf configuration [here](https://docs.influxdata.com/telegraf/v0.10/introduction/configuration/)
+Read more about the Telegraf configuration [here](https://docs.influxdata.com/telegraf/latest/introduction/configuration/)
 
 #####Using the image with input plugins
 
@@ -46,7 +46,7 @@ Start aerospike on a container. (For this example Aerospike, InfluxDB all run in
 Edit the config file and add aerospike as a plugin
 
 	[[inputs.aerospike]]
-	        servers = ["172.17.0.2:3000"] 
+	        servers = ["172.17.0.2:3000"]
 
 Start InfluxDB, and add it as an output plugin
 
@@ -94,9 +94,9 @@ Check that the measurement `foo` is added in the DB
 
 ###Supported Plugins
 
-[Output](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+[Output](https://docs.influxdata.com/telegraf/latest/outputs/)
 
-[Input](https://docs.influxdata.com/telegraf/v0.10/outputs/)
+[Input](https://docs.influxdata.com/telegraf/latest/outputs/)
 
 ## Supported Docker versions
 
