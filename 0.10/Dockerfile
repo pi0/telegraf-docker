@@ -1,15 +1,15 @@
 FROM buildpack-deps:jessie-curl
 
-RUN wget -q https://repos.influxdata.com/influxdb.key && \
-    gpg --import influxdb.key && \
-    rm -f influxdb.key
+RUN gpg \
+    --keyserver hkp://ha.pool.sks-keyservers.net \
+    --recv-keys 05CE15085FC09D18E99EFB22684A14CF2582E0C5
 
 # Note the use of `get.influxdb.com/telegraf` which differs from the
 # other TICK product Dockerfiles.
 ENV TELEGRAF_VERSION 0.10.4.1
 RUN wget -q https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_$TELEGRAF_VERSION-1_amd64.deb.asc && \
     wget -q https://s3.amazonaws.com/get.influxdb.org/telegraf/telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
-    gpg --verify telegraf_$TELEGRAF_VERSION-1_amd64.deb.asc telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
+    gpg --batch --verify telegraf_$TELEGRAF_VERSION-1_amd64.deb.asc telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
     dpkg -i telegraf_$TELEGRAF_VERSION-1_amd64.deb && \
     rm -f telegraf_$TELEGRAF_VERSION-1_amd64.deb*
 
